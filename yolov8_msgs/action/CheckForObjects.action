@@ -1,0 +1,16 @@
+# 检测当前这帧图像中是否有需要检测的目标
+# 使用action以提供程序的非阻塞执行，Action是ROS Node的通信方式之一
+# Action的内容格式包含三个部分：目标、反馈、结果  使用---线来分割
+
+# Goal definition
+int16 id    
+sensor_msgs/Image image
+
+---
+# Result definition
+int16 id
+yolov8_msgs/BoundingBoxes bounding_boxes   # 一定要注意这里的/的路径问题
+
+---
+# Feedback definition
+yolov8_msgs/ObjectCount objectcount

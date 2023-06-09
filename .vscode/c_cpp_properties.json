@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ruoxi/Graduation_Project_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_msgs/include/**",
+        "/home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/include/**",
+        "/usr/include/**",
+        "/usr/local/cuda/**",
+        "/home/ruoxi/3rdparty/TensorRT-8.0.1.6/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

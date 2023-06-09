@@ -1,0 +1,12 @@
+<launch>
+  
+  <!-- -clock: use real system clock, -l:repeat play  -->
+  <node pkg="rosbag" type="play" name="tum_bag_play" output="screen" args="--clock -l /home/ruoxi/Downloads/TUM_Dataset/rgbd_dataset_freiburg3_walking_xyz.bag" >
+    <!-- 注意这里bag文件的路径必须为绝对路径-->
+    <remap from="/camera/rgb/image_color" to="/camera/rgb/image_raw"/>
+  </node>
+
+  <!-- convert image_raw 2 image_raw/compressed  -->
+  <node pkg="image_transport"  type="republish" name="image_compressed" args="raw in:=/camera/rgb/image_raw compressed out:=/camera/rgb/image_raw"> 
+  </node>
+</launch>

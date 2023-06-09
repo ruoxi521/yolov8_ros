@@ -1,0 +1,10 @@
+# suitable for image  
+# equal to the commond : ./app_yolov8  --model=../../data/yolov8/yolov8n.trt  --size=640 --batch_size=1  --cam_id=0  --show
+
+model: ../../data/yolov8/yolov8n-seg.trt
+size: 640
+batch_size: 1
+cam_id: 0
+show: 
+savepath: 
+ 
