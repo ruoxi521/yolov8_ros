@@ -1,0 +1,11 @@
+# suitable for image  
+
+# model_path: /home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/models/detect/yolov8n-b1.trt
+model_path: /home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/models/detect/yolov8n.engine
+label_path: /home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/labels/coco_labels.txt
+image_size: 640
+batch_size: 1
+CLASSES: 80
+Num_box: 8400
+conf_threshold: 0.2
+nms_threshold: 0.5

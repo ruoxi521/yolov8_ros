@@ -1,0 +1,15 @@
+
+
+# suitable for video 
+# equal to the commond : ./app_yolov8  --model=../../data/yolov8/yolov8n.engine --size=640 --batch_size=1 --video=../../data/videoplayback1.mp4  --show --savePath
+
+model: ../../data/yolov8/yolov8n.engine
+size: 640
+batch_size: 1
+video: 6406407.mp4
+show: 
+savepath: 
+
+
+
+ 

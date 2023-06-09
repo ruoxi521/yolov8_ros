@@ -1,0 +1,13 @@
+<launch>
+    <arg name="nodelet_manager" default="yolov8_infer_manager" />
+	  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)" args="manager" output="screen" />
+
+    <node pkg="nodelet" type="nodelet" name="yolov8_infer_nodelet" args="standalone Yolov8InstanceSegmentNodelet" output="screen">
+      <rosparam command="load" file="$(find yolov8_trt_ros)/cfg/segment_for_cam.yaml" />
+    </node>
+
+    <node pkg="yolov8_trt_ros" name="yolo_infer" type="yolov8_trt_ros_node" output="screen">
+        <remap from="/yolov8_infer/input_topic" to="/camera/color/image_raw"/>
+        <remap from="/yolov8_infer/output_topic" to="/yolov8_infer/Mask_boxes"/>
+    </node>
+</launch>

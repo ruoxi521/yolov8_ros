@@ -1,0 +1,20 @@
+# suitable for image  
+# equal to the commond : ./app_yolov8  --model=../../data/yolov8/yolov8n.engine --size=640 --batch_size=1  --img=../../data/6406407.jpg   --show --savePath
+
+model: ../../data/yolov8/yolov8n.engine
+size: 640
+batch_size: 1
+img: 6406407.jpg
+show: 
+savepath: 
+
+# "{model 	|| tensorrt model file	   }"
+# "{size      || image (h, w), eg: 640   }"
+# "{batch_size|| batch size              }"
+# "{video     || video's path			   }"
+# "{img       || image's path			   }"
+# "{cam_id    || camera's device id	   }"
+# "{show      || if show the result	   }"
+# "{savePath  || save path, can be ignore}"
+
+ 

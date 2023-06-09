@@ -1,0 +1,11 @@
+<!-- 插件库的相对路径 -->
+<library path="lib/libyolov8_plugins">
+  <!-- type="插件类" base_class_type="基类" -->
+  <class name="yolov8_trt_ros/Yolov8ObjectDetectorNodelet" type="Yolov8ObjectDetectorNodelet" base_class_type="nodelet::Nodelet">
+    <!-- 描述信息 -->
+    <description>This is a Yolov8ObjectDetector plugin.</description>
+  </class>
+  <class name="yolov8_trt_ros/Yolov8ObjectDetectorNodelet" type="Yolov8ObjectDetectorNodelet" base_class_type="nodelet::Nodelet">
+    <description>This is a Yolov8ObjectDetector plugin.</description>
+  </class>
+</library>

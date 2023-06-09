@@ -1,10 +1,5 @@
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+# ignore .vscode
+/.vscode
 
-# Local History for Visual Studio Code
-.history/
-
-# Local settings
-/build
+# ignore build
+bulid/

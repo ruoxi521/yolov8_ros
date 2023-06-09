@@ -1,0 +1,11 @@
+<launch>
+    
+    <node pkg="yolov8_trt_ros" name="yolov8_infer" type="yolov8_detect_node" output="screen">
+        <remap from="/yolov8_infer/input_topic" to="/camera/rgb/image_raw"/>
+        <remap from="/yolov8_infer/output_topic" to="/yolov8_infer/bounding_boxes"/>
+
+        <rosparam command="load" file="$(find yolov8_trt_ros)/cfg/detector_for_cam.yaml" />
+    </node>
+
+</launch>
+
