@@ -1,0 +1,4 @@
+[submodule "Yolov8-tensorrt"]
+	path = Yolov8-tensorrt
+	url = https://github.com/ruoxi521/Yolov8-tensorrt.git
+	branch = master

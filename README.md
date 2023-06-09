@@ -16,6 +16,18 @@ Deploy yolov8 inference accelerated by TensorRT as a ROS feature pack
 - TensorRT 8.0.1.6
 - ros1 (melodic)
 
+## New feature
+- [x] yolov8_detect infer by TensorRT
+- [ ] yolov8_degment infer by TensorRT
+- [ ] yolov8_classify infer by TensorRT
+
+## changelog
+
+### v1.0
+- Not yet completed，please stay tuned
+### v0.5 
+- add yolov8_trt_ros, yolov8_msgs, ros_yolov8_viewer packages
+
 
 ## Thanks to the following project authors:
 
