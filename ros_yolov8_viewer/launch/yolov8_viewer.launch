@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <param name="class_num" value="80" type="int" />
+  <param name="label_path" 
+         value="/home/ruoxi/Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/labels/coco_labels.txt" 
+         type="string" />
+  <node pkg="ros_yolov8_viewer" name="yolov8_viewer_node" type="yolov8_viewer" output="screen">
+    <remap from="/yolov8_viewer_node/image_raw/compressed" to="/camera/rgb/image_raw/compressed"/>
+    <remap from="/yolov8_viewer_node/inference" to="/yolov8_infer/bounding_boxes"/>
+  </node>
+
+</launch>
