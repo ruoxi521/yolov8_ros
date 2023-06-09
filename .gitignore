@@ -1,0 +1,5 @@
+# ignore .vscode
+/.vscode
+
+# ignore build
+bulid/
