@@ -2,8 +2,8 @@
  * @Author: ruoxi521
  * @Date: 2023-03-31 11:33:34
  * @LastEditors: ruoxi521
- * @LastEditTime: 2023-06-07 22:50:31
- * @FilePath: /src/yolov8_ros/yolov8_trt_ros/src/yolov8_object_detector.cpp
+ * @LastEditTime: 2024-04-11 23:57:01
+ * @FilePath: /yolov8_ros/yolov8_trt_ros/src/yolov8_object_detector.cpp
  * @Description: 
  * 
  * Copyright (c) 2023 by suruoxi521@gmail.com, All Rights Reserved. 
@@ -22,10 +22,6 @@
 #include <unordered_map>
 #include <chrono>
 #include <cublas_v2.h>
-
-
-// #include "yolov8_msgs/BoundingBox.h"
-// #include "yolov8_msgs/BoundingBoxes.h"
 
 using namespace std;
 using namespace nvinfer1;
@@ -55,7 +51,7 @@ bool is_initialized = false;
 
 const char* INPUT_BLOB_NAME = "images";
 const char* OUTPUT_BLOB_NAME = "output0"; 				 //detect;
-std::vector<std::string> labels;
+std::vector<std::string> labels;                         // labels 
 
 int new_h, new_w, padh, padw;
 float ratio_h, ratio_w;
@@ -63,7 +59,7 @@ float ratio_h, ratio_w;
 static Logger gLogger;                    			     // log
 
 struct OutputDet {
-    int id;            // 类别id
+    int id;            // 类别 id
     float confidence;  // 置信度 
     cv::Rect box;      // 矩形框
 };
@@ -84,7 +80,7 @@ int cvImageToTensor(const cv::Mat& image, float* tensor)
 	// static float data[3 * INPUT_H * INPUT_W];
     cv::Mat pre_img;
 
-	std::cout << "debug0" << std::endl;
+	// std::cout << "debug0" << std::endl;
 	
     std::vector<int> padsize;           // resize
     pre_img = preprocess_img(src, INPUT_H, INPUT_W, padsize);
@@ -103,7 +99,7 @@ int cvImageToTensor(const cv::Mat& image, float* tensor)
     for (int row = 0; row < INPUT_H; ++row)
     {
         uchar* uc_pixel = pre_img.data + row * pre_img.step;
-        // pre_img.step = width * 3  每一行有width个3通道的值
+        // pre_img.step = width * 3  每一行有 width 个 3 通道的值
         for (int col = 0; col < INPUT_W; ++col)
         {
             tensor[i] = (float)uc_pixel[2] /255.0;
@@ -138,25 +134,21 @@ void setup(int image_size, int batch_size, std::string model_path,
     	is_initialized = false;
 	}
 	else {
-		// labels
-		std::string line;
-		while (getline(label_file, line));
-		{
-			labels.push_back(line);
-		}
+		// load labels
+		labels = loadLabelsFromFile(label_path);
         
 		// TRT buffer
         ROS_INFO("Begin loading Model...");
         trt_file.seekg(0, trt_file.end);            // 指向文件的最后地址
-        size = trt_file.tellg();                // 把文件长度告诉给size
+        size = trt_file.tellg();                // 把文件长度告诉给 size
 
         std::cout << "\nfile: " << model_path << std::endl;
         std::cout << "size is:  " << size  << std::endl;
 
         trt_file.seekg(0, trt_file.beg);            // 指向文件的最后地址
-        trtModelStream = new char [size];   // 开辟一个char 长度是文件的长度
+        trtModelStream = new char [size];   // 开辟一个 char 长度是文件的长度
         assert(trtModelStream);
-        trt_file.read(trtModelStream, size);    // 将文件内容传给trtModelStream
+        trt_file.read(trtModelStream, size);    // 将文件内容传给 trtModelStream
         trt_file.close(); 
     
 		// Runtime
@@ -267,7 +259,7 @@ yolov8_msgs::BoundingBoxes infer(const sensor_msgs::ImageConstPtr& color_msgs, i
     // std::cout << "debug2" << std::endl;
 
     // 输出：1*net_length*Num_box;     
-    // 所以每个box的属性是每隔Num_box取一个值，共net_length个值
+    // 所以每个 box 的属性是每隔 Num_box 取一个值，共 net_length 个值
     for (int i = 0; i < Num_box; i++)
     {   
         // std::cout << "debug-----0" << std::endl;
@@ -323,10 +315,7 @@ yolov8_msgs::BoundingBoxes infer(const sensor_msgs::ImageConstPtr& color_msgs, i
         bbox.ymin = result.box.y;
         bbox.width = result.box.width;
         bbox.height = result.box.height;
-
-        // TODO
-        // bbox.Class = labels[bbox.id];   // out of the memory
-        // bbox.Class = labels[bbox.id].c_str();
+        bbox.Class = labels[bbox.id].c_str();
 
         bboxes.bounding_boxes.push_back(bbox);
         bboxes.inference_time_ms = total;
@@ -371,28 +360,16 @@ void DrawPred_Det(cv::Mat& img, std::vector<OutputDet> result) {
     }
 
     for (int i = 0; i < result.size(); i++ ) {
-        int left,top;           // BoungingBox的左边和上边
+        int left,top;           // BoungingBox 的左边和上边
         int color_num = i;      
         left = result[i].box.x;
         top  = result[i].box.y;
         rectangle(img, result[i].box, color[result[i].id], 2, 8);
 
-        char label[100];        // 标签
+        char label[labels.size()];  // 标签
 
-        const std::vector<std::string> coco80 = {
-            "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
-            "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
-            "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
-            "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard",
-            "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple",
-            "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch",
-            "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone",
-            "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear",
-            "hair drier", "toothbrush"
-        };
-
-        // sprintf(label, "%d:%.2f", result[i].id, result[i].confidence);  // 打印标签和置信度
-        sprintf(label, "%s:%.2f", coco80[result[i].id].c_str(), result[i].confidence);
+        // 打印标签和置信度
+        sprintf(label, "%s:%.2f", labels[result[i].id].c_str(), result[i].confidence);
 
         int baseline;           // 起始位置
         cv::Size labelSize = getTextSize(label, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseline);

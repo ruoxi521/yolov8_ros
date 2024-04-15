@@ -2,8 +2,8 @@
  * @Author: ruoxi521
  * @Date: 2023-03-31 11:34:37
  * @LastEditors: ruoxi521
- * @LastEditTime: 2023-05-23 10:04:01
- * @FilePath: /Graduation_Project_ws/src/yolov8_ros/yolov8_trt_ros/include/detect/yolov8_object_detector.hpp
+ * @LastEditTime: 2024-04-12 09:25:30
+ * @FilePath: /yolov8_trt_ros/include/detect/yolov8_object_detector.hpp
  * @Description: 
  * 
  * Copyright (c) 2023 by suruoxi521@gmail.com, All Rights Reserved. 
@@ -57,7 +57,7 @@ class Yolov8ObjectDetector {
       int image_size;                         // 输入图像尺寸
       int batch_size;                         // 每次处理的图像数量
       std::string model_path;                 // TensorRT模型（.trt 或者 .engine）
-      std::string label_path;                   // 推理结果存储路径
+      std::string label_path;                 // 推理结果存储路径
       bool show;                              // 是否实时显示推理
       int CLASSES, Num_box;                   // 总类别数， 总锚框输出数
       float CONF_THRESHOLD, NMS_THRESHOLD;    // 阈值设置
